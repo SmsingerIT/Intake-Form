@@ -5,16 +5,70 @@
   <meta charset="UTF-8">
   <title>Full Intake Form</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
-    form { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; }
-    h2, h3 { color: #333; }
-    fieldset { border: none; margin-bottom: 20px; }
-    label { display: block; margin-top: 10px; }
-    input, select, textarea { width: 100%; padding: 8px; margin-top: 5px; }
-    .inline-label { display: inline-block; width: auto; margin-right: 10px; }
-    .logo-wrapper { text-align: center; margin-bottom: 20px; }
-    .logo-wrapper img { max-width: 300px; height: auto; }
-    .description { text-align: center; max-width: 800px; margin: auto; margin-bottom: 30px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+      color: #333333;
+    }
+    form {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      color: #0072CE;
+    }
+    fieldset {
+      border: none;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .inline-label {
+      display: inline-block;
+      width: auto;
+      margin-right: 10px;
+    }
+    .logo-wrapper {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo-wrapper img {
+      max-width: 300px;
+      height: auto;
+    }
+    .description {
+      text-align: center;
+      max-width: 800px;
+      margin: auto;
+      margin-bottom: 30px;
+    }
+    input[type="submit"] {
+      background-color: #0072CE;
+      color: #fff;
+      font-size: 16px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    input[type="submit"]:hover {
+      background-color: #005fa3;
+    }
   </style>
 </head>
 <body>
@@ -31,12 +85,12 @@
   <h2>New Customer / Job Sheet</h2>
 
   <form onsubmit="return validateForm()" action="https://formsubmit.co/coordinators@smsinger.com" method="POST">
+    <input type="hidden" name="_redirect" value="https://smsingerit.github.io/intake-form/thankyou.html">
     <fieldset><h3>Call Information</h3>
       <label>Taken by: <input type="text" name="takenBy" required></label>
       <label>Date: <input type="date" name="callDate" required></label>
       <label>Time: <input type="time" name="callTime" required></label>
     </fieldset>
-
     <fieldset><h3>Customer / Contact Information</h3>
       <label>Full Name: <input type="text" name="fullName" required></label>
       <label>Main Phone: <input type="tel" name="mainPhone" pattern="\d{10}" required></label>
@@ -48,19 +102,16 @@
       <label class="inline-label"><input type="radio" name="contactMethod" value="Email"> Email</label>
       <label class="inline-label"><input type="radio" name="contactMethod" value="Text"> Text</label>
     </fieldset>
-
     <fieldset><h3>Addresses</h3>
       <label>Loss Address: <textarea name="lossAddress" required></textarea></label>
       <label>Billing Address: <textarea name="billingAddress" required></textarea></label>
       <label><input type="checkbox" onclick="copyAddress()"> Same as Loss Address</label>
     </fieldset>
-
     <fieldset><h3>Primary Contact</h3>
       <label>Primary Contact: <input type="text" name="primaryContact"></label>
       <label>Relationship to Customer: <input type="text" name="relationship"></label>
       <label>Referred By: <input type="text" name="referredBy"></label>
     </fieldset>
-
     <fieldset><h3>Loss Information</h3>
       <label>Date of Loss: <input type="date" name="dateOfLoss"></label>
       <label>Source of Damage Determined: <input type="text" name="damageSource"></label>
@@ -78,7 +129,6 @@
       <label class="inline-label"><input type="checkbox" name="affectedProperty" value="Contents"> Contents</label>
       <label>Additional Notes: <textarea name="notes"></textarea></label>
     </fieldset>
-
     <fieldset><h3>Claim Information</h3>
       <label><input type="checkbox" name="selfPay"> Self-Pay</label>
       <label>Insurance Carrier: <input type="text" name="insuranceCarrier"></label>
@@ -86,7 +136,6 @@
       <label>Policy No.: <input type="text" name="policyNumber"></label>
       <label>Deductible: <input type="text" name="deductible"></label>
     </fieldset>
-
     <fieldset><h3>Adjuster Info</h3>
       <label>Name: <input type="text" name="adjusterName"></label>
       <label>Phone No.: <input type="tel" name="adjusterPhone"></label>
@@ -99,11 +148,9 @@
         </select>
       </label>
     </fieldset>
-
     <fieldset><h3>Agent</h3>
       <label>Agent Name: <input type="text" name="agentName"></label>
     </fieldset>
-
     <input type="submit" value="Submit">
   </form>
 
