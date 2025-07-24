@@ -3,28 +3,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Full Intake Form</title>
+  <title>Multi-Step Intake Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
       background: #f4f4f4;
-      color: #333333;
+      margin: 0;
+      padding: 20px;
+      color: #333;
     }
-    form {
-      max-width: 900px;
+    .form-container {
+      max-width: 800px;
       margin: auto;
       background: #fff;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+    .logo-wrapper {
+      text-align: center;
+    }
+    .logo-wrapper img {
+      max-width: 300px;
+      margin-bottom: 10px;
+    }
+    .description {
+      text-align: center;
+      margin-bottom: 20px;
+    }
     h2, h3 {
       color: #0072CE;
     }
     fieldset {
+      display: none;
       border: none;
-      margin-bottom: 20px;
+    }
+    fieldset.active {
+      display: block;
     }
     label {
       display: block;
@@ -34,140 +50,149 @@
       width: 100%;
       padding: 8px;
       margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      box-sizing: border-box;
     }
     .inline-label {
       display: inline-block;
-      width: auto;
       margin-right: 10px;
     }
-    .logo-wrapper {
-      text-align: center;
-      margin-bottom: 20px;
+    .buttons {
+      margin-top: 20px;
     }
-    .logo-wrapper img {
-      max-width: 300px;
-      height: auto;
-    }
-    .description {
-      text-align: center;
-      max-width: 800px;
-      margin: auto;
-      margin-bottom: 30px;
-    }
-    input[type="submit"] {
+    .buttons button {
       background-color: #0072CE;
-      color: #fff;
-      font-size: 16px;
-      padding: 12px 20px;
+      color: white;
+      padding: 10px 20px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-top: 20px;
+      margin-right: 10px;
     }
-    input[type="submit"]:hover {
+    .buttons button:hover {
       background-color: #005fa3;
+    }
+    .progress {
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      height: 20px;
+      width: 0%;
+      background-color: #0072CE;
+      text-align: center;
+      color: white;
+      line-height: 20px;
     }
   </style>
 </head>
 <body>
+
+<div class="form-container">
   <div class="logo-wrapper">
     <img src="LOGO.png" alt="ServiceMaster by Singer Logo">
   </div>
-
   <div class="description">
     <p><strong>ServiceMaster by Singer</strong> restores homes and businesses shattered by disaster, delivering urgent, skilled service with fierce compassion and clear communication.
     We guide customers through disruption to hope, rebuilding lives with every nail. Our purpose-driven team grows as lifelong learners, united in relentless improvement to forge
     a thriving company that honors our people and strengthens communities. We don’t just restore buildings, we rebuild lives, turning loss into strength.</p>
   </div>
 
-  <h2>New Customer / Job Sheet</h2>
+  <div class="progress">
+    <div class="progress-bar" id="progressBar">Step 1</div>
+  </div>
 
   <form onsubmit="return validateForm()" action="https://formsubmit.co/coordinators@smsinger.com" method="POST">
     <input type="hidden" name="_redirect" value="https://smsingerit.github.io/intake-form/thankyou.html">
-    <fieldset><h3>Call Information</h3>
+    <input type="hidden" name="_autoresponse" value="Thank you for submitting your intake form to ServiceMaster by Singer. We’ve received your information and will contact you within 24 hours. If this is an emergency, please call us at 1-855-574-6437.">
+    <input type="hidden" name="timestamp" id="timestamp">
+
+    <fieldset class="active">
+      <h3>Step 1: Call & Contact Info</h3>
       <label>Taken by: <input type="text" name="takenBy" required></label>
       <label>Date: <input type="date" name="callDate" required></label>
       <label>Time: <input type="time" name="callTime" required></label>
-    </fieldset>
-    <fieldset><h3>Customer / Contact Information</h3>
       <label>Full Name: <input type="text" name="fullName" required></label>
       <label>Main Phone: <input type="tel" name="mainPhone" pattern="\d{10}" required></label>
-      <label>2nd Phone: <input type="tel" name="secondPhone" pattern="\d{10}"></label>
-      <label>3rd Phone: <input type="tel" name="thirdPhone" pattern="\d{10}"></label>
       <label>Email: <input type="email" name="email" required></label>
-      <label>Preferred Contact Method:</label>
-      <label class="inline-label"><input type="radio" name="contactMethod" value="Call" required> Call</label>
-      <label class="inline-label"><input type="radio" name="contactMethod" value="Email"> Email</label>
-      <label class="inline-label"><input type="radio" name="contactMethod" value="Text"> Text</label>
     </fieldset>
-    <fieldset><h3>Addresses</h3>
+
+    <fieldset>
+      <h3>Step 2: Address & Damage Info</h3>
       <label>Loss Address: <textarea name="lossAddress" required></textarea></label>
       <label>Billing Address: <textarea name="billingAddress" required></textarea></label>
       <label><input type="checkbox" onclick="copyAddress()"> Same as Loss Address</label>
-    </fieldset>
-    <fieldset><h3>Primary Contact</h3>
-      <label>Primary Contact: <input type="text" name="primaryContact"></label>
-      <label>Relationship to Customer: <input type="text" name="relationship"></label>
-      <label>Referred By: <input type="text" name="referredBy"></label>
-    </fieldset>
-    <fieldset><h3>Loss Information</h3>
-      <label>Date of Loss: <input type="date" name="dateOfLoss"></label>
-      <label>Source of Damage Determined: <input type="text" name="damageSource"></label>
-      <label>Description: <textarea name="damageDescription"></textarea></label>
-      <label>Repaired / Addressed: <input type="text" name="repairInfo"></label>
       <label>Damage Type:</label>
       <label class="inline-label"><input type="checkbox" name="damageType" value="Fire"> Fire</label>
       <label class="inline-label"><input type="checkbox" name="damageType" value="Water"> Water</label>
       <label class="inline-label"><input type="checkbox" name="damageType" value="Bio"> Bio</label>
       <label class="inline-label"><input type="checkbox" name="damageType" value="Other"> Other</label>
-      <label>Affected Property:</label>
-      <label class="inline-label"><input type="checkbox" name="affectedProperty" value="External"> External</label>
-      <label class="inline-label"><input type="checkbox" name="affectedProperty" value="Internal"> Internal</label>
-      <label class="inline-label"><input type="checkbox" name="affectedProperty" value="Fixtures"> Fixtures</label>
-      <label class="inline-label"><input type="checkbox" name="affectedProperty" value="Contents"> Contents</label>
-      <label>Additional Notes: <textarea name="notes"></textarea></label>
     </fieldset>
-    <fieldset><h3>Claim Information</h3>
-      <label><input type="checkbox" name="selfPay"> Self-Pay</label>
+
+    <fieldset>
+      <h3>Step 3: Insurance & Adjuster</h3>
       <label>Insurance Carrier: <input type="text" name="insuranceCarrier"></label>
       <label>Claim No.: <input type="text" name="claimNumber"></label>
-      <label>Policy No.: <input type="text" name="policyNumber"></label>
-      <label>Deductible: <input type="text" name="deductible"></label>
+      <label>Adjuster Name: <input type="text" name="adjusterName"></label>
+      <label>Adjuster Phone: <input type="tel" name="adjusterPhone"></label>
+      <label>Adjuster Email: <input type="email" name="adjusterEmail"></label>
     </fieldset>
-    <fieldset><h3>Adjuster Info</h3>
-      <label>Name: <input type="text" name="adjusterName"></label>
-      <label>Phone No.: <input type="tel" name="adjusterPhone"></label>
-      <label>Email: <input type="email" name="adjusterEmail"></label>
-      <label>Has Visited Site:
-        <select name="visitedSite">
-          <option value="">Select</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </label>
-    </fieldset>
-    <fieldset><h3>Agent</h3>
-      <label>Agent Name: <input type="text" name="agentName"></label>
-    </fieldset>
-    <input type="submit" value="Submit">
-  </form>
 
-  <script>
-    function copyAddress() {
-      const loss = document.getElementsByName("lossAddress")[0];
-      const billing = document.getElementsByName("billingAddress")[0];
-      billing.value = loss.value;
+    <fieldset>
+      <h3>Step 4: Notes & Submit</h3>
+      <label>Additional Notes: <textarea name="notes"></textarea></label>
+      <input type="submit" value="Submit Form">
+    </fieldset>
+
+    <div class="buttons">
+      <button type="button" onclick="nextStep(-1)">Back</button>
+      <button type="button" onclick="nextStep(1)">Next</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  let currentStep = 0;
+  const steps = document.querySelectorAll("fieldset");
+  const progressBar = document.getElementById("progressBar");
+  document.getElementById("timestamp").value = new Date().toLocaleString();
+
+  function showStep(step) {
+    steps.forEach((fs, index) => {
+      fs.classList.toggle("active", index === step);
+    });
+    const percent = ((step + 1) / steps.length) * 100;
+    progressBar.style.width = percent + "%";
+    progressBar.textContent = "Step " + (step + 1);
+  }
+
+  function nextStep(n) {
+    if (currentStep + n >= 0 && currentStep + n < steps.length) {
+      currentStep += n;
+      showStep(currentStep);
     }
-    function validateForm() {
-      const mainPhone = document.getElementsByName("mainPhone")[0];
-      if (mainPhone && !/^\d{10}$/.test(mainPhone.value)) {
-        alert("Main phone must be a 10-digit number.");
-        return false;
-      }
-      return true;
+  }
+
+  function copyAddress() {
+    const loss = document.getElementsByName("lossAddress")[0];
+    const billing = document.getElementsByName("billingAddress")[0];
+    billing.value = loss.value;
+  }
+
+  function validateForm() {
+    const mainPhone = document.getElementsByName("mainPhone")[0];
+    if (mainPhone && !/^\d{10}$/.test(mainPhone.value)) {
+      alert("Main phone must be a 10-digit number.");
+      return false;
     }
-  </script>
+    return true;
+  }
+
+  // Show the initial step
+  showStep(currentStep);
+</script>
+
 </body>
 </html>
